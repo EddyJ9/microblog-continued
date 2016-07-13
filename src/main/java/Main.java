@@ -29,9 +29,10 @@ public class Main {
             User user = users.get(name);
 
             ModelAndView rval;
-            if (user == null) {
+            if (user == null || user.getPassword().equals(password) || user.getPassword().isEmpty()){
                 rval = new ModelAndView(m, "index.html");
-            }else {
+            }
+            else {
                 m.put("user", user);
                 rval = new ModelAndView(m, "messages.html");
             }
@@ -44,10 +45,8 @@ public class Main {
             String name = request.queryParams("loginName");
             String password = request.queryParams("loginPassword");
 
-            if(user == null){
                 user = new User(name, password);
                 users.put(name, user);
-            }
 
             Session session = request.session();
             session.attribute(SESSION_USERNAME, name);
@@ -80,6 +79,7 @@ public class Main {
             Session session = request.session();
             String name = session.attribute(SESSION_USERNAME);
             User user = users.get(name);
+
             int messageNumber = Integer.valueOf(request.queryParams("deletedMessage"));
             user.deleteMessage(messageNumber);
             response.redirect("/");
@@ -90,6 +90,7 @@ public class Main {
             Session session = request.session();
             String name = session.attribute(SESSION_USERNAME);
             User user = users.get(name);
+
             int messageNumber = Integer.valueOf(request.queryParams("messageNumber"));
             String editedMessage = request.queryParams("editMessage");
             Messages newMessage = new Messages(editedMessage);

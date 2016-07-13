@@ -36,10 +36,11 @@ public class User {
     }
 
     public void deleteMessage(int messageNumber){
-        messages.remove(messageNumber);
+        messages.remove(messageNumber - 1);
     }
 
     public void editMessage(int messageNumber, Messages message){
-        messages.remove(messageNumber).add(messageNumber, message);
+        messages.remove(messageNumber - 1);
+        messages.add(messageNumber, message);
     }
 }
