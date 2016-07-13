@@ -41,6 +41,6 @@ public class User {
 
     public void editMessage(int messageNumber, Messages message){
         messages.remove(messageNumber - 1);
-        messages.add(messageNumber, message);
+        messages.add(messageNumber - 1, message);
     }
 }
