@@ -34,19 +34,22 @@ public class Main {
             }
             else {
                 m.put("user", user);
-                rval = new ModelAndView(m, "messages.html");
+                    rval = new ModelAndView(m, "messages.html");
             }
             return rval;
 
         }, new MustacheTemplateEngine());
 
         Spark.post("/create-user", (request, response) -> {
-            User user = null;
             String name = request.queryParams("loginName");
             String password = request.queryParams("loginPassword");
+            User user = users.get(name);
 
+
+            if( user == null){
                 user = new User(name, password);
                 users.put(name, user);
+            }
 
             Session session = request.session();
             session.attribute(SESSION_USERNAME, name);
